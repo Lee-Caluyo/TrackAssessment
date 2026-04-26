@@ -37,12 +37,11 @@ from fastapi import UploadFile, File
 app = FastAPI()
 app.include_router(rule_predict_router)
 
-# CORS — allow the frontend dev server and any origins configured via env
 _extra_origins = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "").split(",") if o.strip()]
 _cors_origins = ["http://localhost:3000", "http://127.0.0.1:3000"] + _extra_origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=_cors_origins,
+    allow_origins=_cors_origins,  # Ensure the allowed origins are passed here
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
